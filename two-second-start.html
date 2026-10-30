@@ -77,7 +77,7 @@
           </div>
           <svg id="velocity-chart" class="chart" viewBox="0 0 900 230" role="img" aria-labelledby="velocity-chart-title velocity-chart-desc"><title id="velocity-chart-title">Velocity is a straight line: v equals 2 times t</title><desc id="velocity-chart-desc">Velocity rises from zero to five meters per second. Its slope is the constant acceleration 2. The shaded triangular area grows to 6.25 meters of position change.</desc></svg>
           <p class="chart-insight" id="velocity-insight"></p>
-          <p class="line-equation-strip"><strong>Line equation: v = mt + b.</strong> Here m = (5 &minus; 0)/(2.5 &minus; 0) = 2 and b = v(0) = 0. So v(t) = 2t.</p>
+          <p class="line-equation-strip"><strong>Equation of a line: y = mx + b.</strong> For this chart, y is velocity v and the horizontal variable is time t. So v = mt + b = 2t + 0. See the worked example below.</p>
         </article>
         <article class="chart-card acceleration">
           <div class="chart-heading">
@@ -130,8 +130,25 @@
     <section class="velocity-methods" aria-labelledby="velocity-methods-title">
       <p class="eyebrow">START WITH THE VELOCITY LINE</p>
       <h2 id="velocity-methods-title">Three roads from velocity to position.</h2>
-      <p class="methods-intro">The line form is v(t) = mt + b, where m is acceleration and b is starting velocity.
-        Here m = 2 and b = 0. To get position, account for <strong>all the motion over time</strong>, not just the final speed.</p>
+      <p class="methods-intro">Start with the familiar equation of a line, <strong>y = mx + b</strong>.
+        On the velocity chart, the vertical value is velocity and the horizontal value is time.
+        To get position from that line, account for <strong>all the motion over time</strong>, not just the final speed.</p>
+      <article class="line-equation-example" aria-labelledby="line-equation-title">
+        <p class="eyebrow">THE EQUATION OF A LINE / A WORKED EXAMPLE</p>
+        <h3 id="line-equation-title">y = mx + b becomes v(t) = 2t + 0.</h3>
+        <div class="line-equation-steps">
+          <div><p class="eyebrow">THE FAMILIAR FORM</p><p class="math-line">y = mx + b</p><p>m is the slope; b is the vertical intercept.</p></div>
+          <div><p class="eyebrow">LABEL THE RUNNING AXES</p><p class="math-line">v = mt + b</p><p>Replace vertical y with velocity v, and horizontal x with time t.</p></div>
+          <div><p class="eyebrow">PUT IN OUR NUMBERS</p><p class="math-line">v(t) = 2t + 0</p><p>Slope m = 2 m/s<sup>2</sup>; starting velocity b = 0 m/s.</p></div>
+        </div>
+        <p><strong>Find m:</strong> use the two points (0 s, 0 m/s) and (2.5 s, 5 m/s).
+          Rise &divide; run = (5 &minus; 0)/(2.5 &minus; 0) = <strong>2 m/s<sup>2</sup></strong>.</p>
+        <p><strong>Find b:</strong> at t = 0, velocity is zero, so <strong>b = 0 m/s</strong>.</p>
+        <p><strong>Try t = 1 s:</strong> v(1) = 2 &times; 1 + 0 = <strong>2 m/s</strong>.
+          Then use average velocity, integration, or a sum below to find the position.</p>
+        <p class="line-notation-note">Careful with the letter x: in the generic formula y = mx + b it means the horizontal coordinate.
+          On this velocity chart that coordinate is time t, not the runner's position x(t).</p>
+      </article>
       <div class="method-grid">
         <article class="method-card">
           <p class="eyebrow">01 / LINE + AVERAGE VELOCITY</p><h3>No integral notation needed.</h3>

@@ -210,6 +210,16 @@ footer { color: var(--muted); font-size: 11px; text-align: center; padding: 30px
 .line-equation-strip strong { color: var(--velocity); }
 .velocity-methods { margin-top: 40px; }
 .methods-intro { max-width: 900px; color: var(--muted); font-size: 14px; }
+.line-equation-example { background: #edf5f2; border: 1px solid #d5e4d8; border-radius: 14px; padding: 24px; margin-top: 22px; }
+.line-equation-example > .eyebrow { color: var(--velocity); }
+.line-equation-example h3 { margin: 8px 0 18px; font-size: 20px; }
+.line-equation-example p:not(.math-line):not(.eyebrow) { font-size: 13px; color: var(--muted); }
+.line-equation-example strong { color: var(--velocity); }
+.line-equation-steps { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+.line-equation-steps > div { background: white; border-radius: 8px; padding: 16px; }
+.line-equation-steps .eyebrow { font-size: 10px; color: var(--velocity); }
+.line-equation-steps .math-line { font-size: 25px; }
+.line-notation-note { padding-top: 12px; border-top: 1px solid #c9ddd5; }
 .method-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; margin-top: 22px; }
 .method-card { border: 1px solid var(--line); border-radius: 14px; background: white; padding: 24px; }
 .method-card > .eyebrow { color: var(--velocity); }
@@ -245,6 +255,7 @@ footer { color: var(--muted); font-size: 11px; text-align: center; padding: 30px
   .connections { gap: 4px; }
   .sum-grid { grid-template-columns: 1fr; }
   .method-grid { grid-template-columns: 1fr; }
+  .line-equation-steps { grid-template-columns: 1fr; }
   .practice-groups { grid-template-columns: 1fr; }
 }
 @media (max-width: 600px) {
