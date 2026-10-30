@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>One direction. Just the power rule. | The Running Lab</title>
+  <link rel="stylesheet" href="styles.css">
+  <script defer src="workout-model.js"></script>
+  <script defer src="app.js"></script>
+</head>
+<body class="workout">
+  <main>
+    <header>
+      <p class="eyebrow">THE RUNNING LAB / JUST THE POWER RULE</p>
+      <h1>One direction. A few changes of pace.</h1>
+      <p class="intro">Start from rest. Cruise. Surge in the middle. Recover. Kick near the end.
+        Then <strong>slow all the way to a stop</strong>. Simple equations connect every part of this 10-mile run.</p>
+      <p class="pace-note"><strong>Cruise: 8 mph = 7:30/mile.</strong> Surge and kick: 10 mph = 6:00/mile.
+        Only the start and stop ramps go below the usual 6:00&ndash;8:00/mile running range.</p>
+    </header>
+
+    <p class="unit-note"><strong>Units:</strong> the controls use minutes; graph time is in hours so slopes and areas work directly with mph.
+      The runner's course shows miles. Section-by-section equations are below the charts.</p>
+
+    <section class="workspace" aria-label="Runner and linked position, velocity, and acceleration graphs">
+      <div class="charts">
+        <section class="run-card" aria-labelledby="run-title">
+          <div class="section-heading">
+            <div><p class="eyebrow">10 MILES / 79 MINUTES / ALWAYS FORWARD</p><h2 id="run-title">Start. Surge. Kick. Stop.</h2></div>
+            <span class="badge" id="phase">Start from rest</span>
+          </div>
+          <p class="course-axis-note">COURSE POSITION / MILES</p>
+          <div class="track" aria-label="Runner moves forward from the start to the finish, 10 miles away">
+            <div class="track-fill" id="track-fill"></div>
+            <div class="runner" id="runner">
+              <svg viewBox="0 0 50 65" aria-hidden="true">
+                <circle cx="30" cy="9" r="6" fill="currentColor"/>
+                <g fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M27 21 L22 37 M26 23 L36 31 L44 25 M26 23 L15 28 L9 23"/>
+                  <path class="leg-one" d="M22 37 L32 47 L39 59"/>
+                  <path class="leg-two" d="M22 37 L13 48 L3 47"/>
+                </g>
+              </svg>
+            </div>
+          </div>
+          <div class="track-labels"><span>START &middot; 0 mi</span><span id="runner-distance">0 mi traveled</span><span>FINISH &middot; 10 mi</span></div>
+          <div class="transport">
+            <button id="play" type="button" aria-pressed="false">Play run</button>
+            <button id="reset" type="button" class="secondary">Reset</button>
+            <label class="time-control" for="time">Run time <output id="time-value" for="time">0.0 min</output>
+              <input id="time" type="range" min="0" max="79" step="0.1" value="0">
+            </label>
+            <label class="speed-control" for="speed">Playback
+              <select id="speed"><option value="1">1 min / sec</option><option value="2" selected>2 min / sec</option><option value="4">4 min / sec</option></select>
+            </label>
+          </div>
+          <div class="phase-bar" aria-hidden="true"><span>Start</span><span>Cruise</span><span>Surge</span><span>Recover</span><span>Cruise</span><span>Kick</span><span>Stop</span></div>
+        </section>
+        <article class="chart-card position">
+          <div class="chart-heading"><div><p class="eyebrow">01 / POSITION</p><h2>Distance keeps accumulating.</h2></div><div class="reading"><span id="position-value"></span><small>miles</small></div></div>
+          <svg id="position-chart" class="chart" viewBox="0 0 900 230" role="img" aria-labelledby="position-chart-title position-chart-desc"><title id="position-chart-title">Position versus time in hours</title><desc id="position-chart-desc">Position only increases, from zero to ten miles. Its slope is zero at the start and finish, steeper during the middle surge and final kick, and constant while cruising.</desc></svg>
+          <p class="chart-insight" id="position-insight"></p>
+        </article>
+        <article class="chart-card velocity">
+          <div class="chart-heading"><div><p class="eyebrow">02 / VELOCITY</p><h2>Start at zero. Finish at zero.</h2></div><div class="reading"><span id="velocity-value"></span><small>miles / hour</small><small id="velocity-link" class="slope-match">= position tangent slope</small></div></div>
+          <svg id="velocity-chart" class="chart" viewBox="0 0 900 230" role="img" aria-labelledby="velocity-chart-title velocity-chart-desc"><title id="velocity-chart-title">Velocity versus time in hours</title><desc id="velocity-chart-desc">Straight lines connect velocities zero, eight, eight, ten, eight, eight, ten, and zero mph at minutes zero, six, twenty-seven, thirty-seven, forty-three, fifty-five, sixty-seven, and seventy-nine. Acceleration and deceleration sections last six to twelve minutes. Cruising pace is seven minutes thirty seconds per mile; both surges reach six minutes per mile. Velocity never goes negative.</desc></svg>
+          <p class="chart-insight" id="velocity-insight"></p>
+        </article>
+        <article class="chart-card acceleration">
+          <div class="chart-heading"><div><p class="eyebrow">03 / ACCELERATION</p><h2>Flat sections. Simple changes.</h2></div><div class="reading"><span id="acceleration-value"></span><small>mph / hour</small><small id="acceleration-link" class="slope-match">= velocity tangent slope</small></div></div>
+          <svg id="acceleration-chart" class="chart" viewBox="0 0 900 230" role="img" aria-labelledby="acceleration-chart-title acceleration-chart-desc"><title id="acceleration-chart-title">Piecewise constant acceleration versus time in hours</title><desc id="acceleration-chart-desc">Horizontal sections at 80, zero, 12, minus 20, zero, 10, and minus 50 mph per hour. Open circles mark switching instants, where acceleration has no single two-sided value.</desc></svg>
+          <p class="chart-insight" id="acceleration-insight"></p>
+        </article>
+      </div>
+      <aside class="lab-panel">
+        <p class="eyebrow">SLOPE &amp; AREA</p>
+        <h2>Connect the graphs.</h2>
+        <label class="toggle"><input id="show-tangents" type="checkbox" checked> Show tangent slopes</label>
+        <p class="help">Position slope = velocity. Velocity slope = acceleration.</p>
+        <label class="toggle"><input id="show-areas" type="checkbox" checked> Shade the selected interval</label>
+        <p class="help">Velocity area gives miles traveled. Acceleration area gives the change in mph.</p>
+        <label class="toggle"><input id="show-secant" type="checkbox"> Show average position slope</label>
+        <div class="interval">
+          <h3>Integrate a section</h3>
+          <label for="interval-start">Start <output id="start-value" for="interval-start"></output></label>
+          <input id="interval-start" type="range" min="0" max="78" step="1" value="0">
+          <label for="interval-end">End <output id="end-value" for="interval-end"></output></label>
+          <input id="interval-end" type="range" min="1" max="79" step="1" value="6">
+          <div class="presets">
+            <button type="button" class="preset" data-start="27" data-end="37">Middle surge</button>
+            <button type="button" class="preset" data-start="55" data-end="67">Kick</button>
+            <button type="button" class="preset" data-start="67" data-end="79">Stop</button>
+            <button id="whole-run" type="button" class="preset">Whole run</button>
+          </div>
+        </div>
+        <div class="area-result"><span>VELOCITY AREA &rarr; DISTANCE</span><strong id="displacement"></strong><p id="displacement-equation"></p></div>
+        <div class="area-result"><span>ACCELERATION AREA &rarr; VELOCITY CHANGE</span><strong id="velocity-change"></strong><p id="velocity-equation"></p><p id="signed-areas"></p></div>
+        <p class="average" id="average-velocity"></p>
+      </aside>
+    </section>
+
+    <details class="sum-lab optional-sum">
+      <summary>Optional: watch little areas add up to position</summary>
+      <div class="section-heading">
+        <p class="sum-intro">Each rectangle adds a little distance: velocity &times; elapsed hours.</p>
+        <label class="slice-control" for="sum-slices">Rectangle count
+          <select id="sum-slices"><option value="8">8 / coarse</option><option value="24" selected>24 / medium</option><option value="80">80 / fine</option><option value="240">240 / finer</option></select>
+        </label>
+      </div>
+      <div class="sum-grid">
+        <div>
+          <svg id="sum-chart" class="chart velocity" viewBox="0 0 900 230" role="img" aria-labelledby="sum-chart-title sum-chart-desc"><title id="sum-chart-title">Accumulating velocity area</title><desc id="sum-chart-desc">Midpoint rectangles accumulate distance from the start to the selected time. All areas are positive because the runner moves in one direction.</desc></svg>
+          <div class="sum-transport">
+            <button id="sum-play" type="button" aria-pressed="false">Play accumulation</button>
+            <button id="sum-reset" type="button" class="secondary">Start over</button>
+            <label class="time-control" for="sum-time">Run time <output id="sum-time-value" for="sum-time"></output>
+              <input id="sum-time" type="range" min="0" max="79" step="0.1" value="0">
+            </label>
+          </div>
+          <p class="sum-caption" id="sum-slice-note"></p>
+        </div>
+        <div class="sum-readings">
+          <p class="sum-formula">x<sub>N</sub>(t) = &sum; v(t<sub>i</sub><sup>*</sup>) &Delta;t<sub>i</sub></p>
+          <div class="sum-metrics">
+            <div><span>RECTANGLE SUM</span><strong id="sum-position"></strong></div>
+            <div><span>EXACT POSITION</span><strong id="sum-exact"></strong></div>
+            <div><span>ESTIMATED DISTANCE</span><strong id="sum-distance"></strong></div>
+            <div><span>ESTIMATE MINUS EXACT</span><strong id="sum-error"></strong></div>
+          </div>
+          <p id="sum-parts"></p><p id="sum-last"></p>
+        </div>
+      </div>
+      <p class="sum-caption">These are midpoint rectangles. On a straight velocity segment they give the exact area; rectangles that cross a change in slope can introduce approximation error.</p>
+    </details>
+
+    <details class="math-details">
+      <summary>All seven sections and their power-rule equations</summary>
+      <p>In every row, u starts at zero and measures hours since that section began. Position is in miles; velocity is mph; acceleration is mph/hour. The starting position carries the accumulated distance into the next section.</p>
+      <div class="formula-scroll"><table>
+        <thead><tr><th>Section / minutes</th><th>Position x(u)</th><th>Velocity v(u)</th><th>Acceleration a(u)</th></tr></thead>
+        <tbody>
+          <tr><th>Start / 0&ndash;6</th><td>40u<sup>2</sup></td><td>80u</td><td>80</td></tr>
+          <tr><th>Cruise / 6&ndash;27</th><td>0.4 + 8u</td><td>8</td><td>0</td></tr>
+          <tr><th>Surge / 27&ndash;37</th><td>3.2 + 8u + 6u<sup>2</sup></td><td>8 + 12u</td><td>12</td></tr>
+          <tr><th>Recover / 37&ndash;43</th><td>4.7 + 10u &minus; 10u<sup>2</sup></td><td>10 &minus; 20u</td><td>&minus;20</td></tr>
+          <tr><th>Cruise / 43&ndash;55</th><td>5.6 + 8u</td><td>8</td><td>0</td></tr>
+          <tr><th>Kick / 55&ndash;67</th><td>7.2 + 8u + 5u<sup>2</sup></td><td>8 + 10u</td><td>10</td></tr>
+          <tr><th>Stop / 67&ndash;79</th><td>9 + 10u &minus; 25u<sup>2</sup></td><td>10 &minus; 50u</td><td>&minus;50</td></tr>
+        </tbody>
+      </table></div>
+      <p><strong>The common pattern:</strong> x = x<sub>0</sub> + v<sub>0</sub>u + &frac12;au<sup>2</sup>; v = v<sub>0</sub> + au; a is constant. Integration restores x<sub>0</sub> and v<sub>0</sub> as constants of integration. Since u differs from the overall time in hours only by a constant, differentiation with respect to either gives the same rates.</p>
+      <p><strong>At the changes:</strong> position and velocity stay continuous. Acceleration changes abruptly in this idealized model; there is no single two-sided acceleration at the switching instants. Open circles show those instants rather than artificial ramps. At the start and finish, the displayed equations give the one-sided rates inside the run.</p>
+      <p><strong>Clean numbers:</strong> all section times, target speeds, accelerations, and coefficients of u and u<sup>2</sup> are integers. Starting positions need only tenths of a mile. Cruise speed is 8 mph (7:30/mile); both surges reach 10 mph (6:00/mile). Starting and stopping are the only slower sections.</p>
+      <p><strong>Units:</strong> 12 mph/hour means a velocity increase of 1 mph every five minutes. All graph areas use hours. The full velocity area is exactly 10 miles; the full signed acceleration area is zero because the runner starts and finishes at rest.</p>
+    </details>
+
+    <section class="equation-lab" aria-labelledby="section-name">
+      <div class="section-heading">
+        <div><p class="eyebrow">ONE SECTION AT A TIME</p><h2 id="section-name">Start from rest</h2></div>
+        <label class="slice-control" for="section-select">Explore a section<select id="section-select"></select></label>
+      </div>
+      <p class="section-clock" id="section-clock"></p>
+      <div class="equation-grid">
+        <div class="position"><p class="eyebrow">POSITION / MILES</p><strong id="position-equation"></strong><small>Quadratic when acceleration is nonzero</small></div>
+        <div class="velocity"><p class="eyebrow">VELOCITY / MPH</p><strong id="velocity-equation-current"></strong><small>Differentiate position with the power rule</small></div>
+        <div class="acceleration"><p class="eyebrow">ACCELERATION / MPH PER HOUR</p><strong id="acceleration-equation"></strong><small>Differentiate velocity: a constant</small></div>
+      </div>
+      <p class="power-rule-note"><strong>Differentiate left to right. Integrate right to left.</strong> The only rules needed are
+        d(u<sup>2</sup>)/du = 2u, &int;u du = u<sup>2</sup>/2, and &int;1 du = u.</p>
+      <p class="section-example" id="antiderivative-equation"></p>
+      <p class="section-example" id="section-integral"></p>
+    </section>
+    <footer>An idealized workout. No trigonometry. No reverse direction. Just the power rule.</footer>
+  </main>
+</body>
+</html>

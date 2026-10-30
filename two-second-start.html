@@ -1,0 +1,408 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>2.5 seconds. 6.25 meters. | The Running Lab</title>
+  <link rel="stylesheet" href="styles.css">
+  <script defer src="two-second-start-model.js"></script>
+  <script defer src="app.js"></script>
+</head>
+<body class="workout start-lesson">
+  <main>
+    <header>
+      <p class="eyebrow">THE RUNNING LAB / THE FIRST 2.5 SECONDS</p>
+      <h1>From still to stride.</h1>
+      <p class="intro">Start at rest. Accelerate at <strong>2 meters per second, per second</strong>.
+        After 2.5 seconds: <strong>5 m/s</strong>, with <strong>6.25 meters</strong> behind you.
+        Three simple equations tell the same story.</p>
+      <div class="lesson-facts" aria-label="The model at a glance">
+        <span><strong>2.5 s</strong> elapsed</span><span><strong>5 m/s</strong> final speed</span><span><strong>6.25 m</strong> distance</span>
+      </div>
+      <p class="pace-note">Final speed: 5 m/s = 0.005 km/s = 18 km/h, about 5:22 per mile. The runner never goes faster than 5:00-mile pace in this example.</p>
+    </header>
+
+    <div class="lesson-directions" aria-label="How the three graphs connect">
+      <p><span class="direction-label derivative-color">DIFFERENTIATE &rarr;</span> Position &rarr; velocity &rarr; acceleration <strong>Take slopes.</strong></p>
+      <p><span class="direction-label integral-color">INTEGRATE &larr;</span> Position &larr; velocity &larr; acceleration <strong>Add areas and initial values.</strong></p>
+    </div>
+
+    <section class="workspace" aria-label="Runner and synchronized calculus graphs">
+      <div class="charts">
+        <section class="run-card" aria-labelledby="run-title">
+          <div class="section-heading">
+            <div><p class="eyebrow">0 TO 5 M/S / JUST 2.5 SECONDS</p><h2 id="run-title">Watch the start happen.</h2></div>
+            <span class="badge" id="phase">Accelerating</span>
+          </div>
+          <p class="course-axis-note">COURSE POSITION / METERS</p>
+          <div class="track" aria-label="Runner accelerates from rest and travels 6.25 meters in 2.5 seconds">
+            <div class="track-fill" id="track-fill"></div>
+            <div class="runner" id="runner">
+              <svg viewBox="0 0 50 65" aria-hidden="true">
+                <circle cx="30" cy="9" r="6" fill="currentColor"/>
+                <g fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M27 21 L22 37 M26 23 L36 31 L44 25 M26 23 L15 28 L9 23"/>
+                  <path class="leg-one" d="M22 37 L32 47 L39 59"/>
+                  <path class="leg-two" d="M22 37 L13 48 L3 47"/>
+                </g>
+              </svg>
+            </div>
+          </div>
+          <div class="track-labels"><span>START &middot; 0 m</span><span id="runner-distance">1.00 m traveled</span><span>2.5 SECONDS &middot; 6.25 m</span></div>
+          <div class="transport">
+            <button id="play" type="button" aria-pressed="false">Play run</button>
+            <button id="reset" type="button" class="secondary">Reset</button>
+            <label class="time-control" for="time">Time <output id="time-value" for="time">1.00 s</output>
+              <input id="time" type="range" min="0" max="2.5" step="0.01" value="1">
+            </label>
+            <label class="speed-control" for="speed">Playback
+              <select id="speed"><option value="0.25" selected>0.25&times; / slow</option><option value="0.5">0.5&times;</option><option value="1">1&times;</option></select>
+            </label>
+          </div>
+          <p class="runner-caption">Click or drag any chart to move time; the runner and all charts stay linked. The runner moves along distance, while the graphs share a time axis.</p>
+        </section>
+
+        <article class="chart-card position">
+          <div class="chart-heading">
+            <div><p class="eyebrow">01 / POSITION</p><h2 class="function-heading">x(t) = t<sup>2</sup></h2></div>
+            <div class="reading"><span id="position-value"></span><small>meters</small></div>
+          </div>
+          <svg id="position-chart" class="chart" viewBox="0 0 900 230" role="img" aria-labelledby="position-chart-title position-chart-desc"><title id="position-chart-title">Position is a parabola: x equals t squared</title><desc id="position-chart-desc">Position rises from zero to 6.25 meters. Its tangent slope increases from zero to five meters per second and matches the highlighted velocity value below.</desc></svg>
+          <p class="chart-insight" id="position-insight"></p>
+        </article>
+        <article class="chart-card velocity">
+          <div class="chart-heading">
+            <div><p class="eyebrow">02 / VELOCITY</p><h2 class="function-heading">v(t) = 2t</h2></div>
+            <div class="reading"><span id="velocity-value"></span><small>meters / second</small><small id="velocity-link" class="slope-match">= position tangent slope</small></div>
+          </div>
+          <svg id="velocity-chart" class="chart" viewBox="0 0 900 230" role="img" aria-labelledby="velocity-chart-title velocity-chart-desc"><title id="velocity-chart-title">Velocity is a straight line: v equals 2 times t</title><desc id="velocity-chart-desc">Velocity rises from zero to five meters per second. Its slope is the constant acceleration 2. The shaded triangular area grows to 6.25 meters of position change.</desc></svg>
+          <p class="chart-insight" id="velocity-insight"></p>
+          <p class="line-equation-strip"><strong>Line equation: v = mt + b.</strong> Here m = (5 &minus; 0)/(2.5 &minus; 0) = 2 and b = v(0) = 0. So v(t) = 2t.</p>
+        </article>
+        <article class="chart-card acceleration">
+          <div class="chart-heading">
+            <div><p class="eyebrow">03 / ACCELERATION</p><h2 class="function-heading">a(t) = 2</h2></div>
+            <div class="reading"><span id="acceleration-value"></span><small>meters / second<sup>2</sup></small><small id="acceleration-link" class="slope-match">= velocity tangent slope</small></div>
+          </div>
+          <svg id="acceleration-chart" class="chart" viewBox="0 0 900 230" role="img" aria-labelledby="acceleration-chart-title acceleration-chart-desc"><title id="acceleration-chart-title">Acceleration is a horizontal line at 2 meters per second squared</title><desc id="acceleration-chart-desc">Acceleration stays constant for all 2.5 seconds. The shaded rectangular area grows to five meters per second of velocity change.</desc></svg>
+          <p class="chart-insight" id="acceleration-insight"></p>
+        </article>
+      </div>
+
+      <aside class="lab-panel">
+        <p class="eyebrow">FOLLOW THE SAME MOMENT</p>
+        <h2>Slopes down.<br>Areas back up.</h2>
+        <div class="area-result pace-result">
+          <span>SPEED &rarr; MILE PACE</span>
+          <strong id="mile-pace"></strong>
+          <p>At <span id="pace-speed"></span>. Minutes and seconds to run one mile at this speed.</p>
+          <p>Pace in seconds per mile = 1,609.344 meters &divide; speed in m/s.</p>
+        </div>
+        <label class="toggle"><input id="show-tangents" type="checkbox" checked> Link slopes to the next graph</label>
+        <p class="help">Orange labels show tangent slopes. Matching orange values and rings show where those slopes appear below.</p>
+        <label class="toggle"><input id="show-areas" type="checkbox" checked> Accumulate area from the start</label>
+        <p class="help">Green area grows from 0 to the selected time. The triangle gives position; the rectangle gives velocity.</p>
+        <input id="interval-start" type="hidden" value="0">
+        <input id="interval-end" type="hidden" value="1">
+        <p class="accumulation-window"><output id="start-value"></output> &rarr; <output id="end-value"></output></p>
+        <div class="area-result">
+          <span>VELOCITY TRIANGLE &rarr; POSITION</span>
+          <strong id="displacement"></strong>
+          <p class="area-formula">&frac12; &times; t &times; v(t) = t<sup>2</sup></p>
+          <p id="displacement-equation"></p>
+        </div>
+        <div class="area-result">
+          <span>ACCELERATION RECTANGLE &rarr; VELOCITY</span>
+          <strong id="velocity-change"></strong>
+          <p class="area-formula">t &times; 2 = 2t</p>
+          <p id="velocity-equation"></p>
+        </div>
+        <button id="whole-run" class="endpoint-button" type="button">Show both full areas at 2.5 s</button>
+        <details class="small-details">
+          <summary>Compare with average velocity</summary>
+          <label class="toggle"><input id="show-secant" type="checkbox"> Show average position slope</label>
+          <p id="average-velocity"></p>
+          <p id="signed-areas"></p>
+        </details>
+      </aside>
+    </section>
+
+    <section class="velocity-methods" aria-labelledby="velocity-methods-title">
+      <p class="eyebrow">START WITH THE VELOCITY LINE</p>
+      <h2 id="velocity-methods-title">Three roads from velocity to position.</h2>
+      <p class="methods-intro">The line form is v(t) = mt + b, where m is acceleration and b is starting velocity.
+        Here m = 2 and b = 0. To get position, account for <strong>all the motion over time</strong>, not just the final speed.</p>
+      <div class="method-grid">
+        <article class="method-card">
+          <p class="eyebrow">01 / LINE + AVERAGE VELOCITY</p><h3>No integral notation needed.</h3>
+          <p>Because velocity changes linearly, its average over 0 to t is exactly the average of its endpoints.</p>
+          <p class="math-line">Average v = [v(0) + v(t)]/2<br>= (0 + 2t)/2 = t</p>
+          <p class="math-line">x(t) = average v &times; t<br>= <strong>t<sup>2</sup></strong></p>
+          <p>At 2.5 s: average speed is (0 + 5)/2 = 2.5 m/s. Position change is 2.5 &times; 2.5 = <strong>6.25 m</strong>.</p>
+          <p class="method-footnote">For any straight velocity line v = mt + b: x(t) = x(0) + bt + &frac12;mt<sup>2</sup>. Endpoint averaging is not generally exact for curved velocity graphs.</p>
+        </article>
+        <article class="method-card">
+          <p class="eyebrow">02 / INTEGRATION</p><h3>Find the exact area.</h3>
+          <p>Integrate velocity over elapsed time. The power rule gives the same position equation.</p>
+          <p class="math-line">x(t) &minus; x(0)<br>= &int;<sub>0</sub><sup>t</sup> 2s ds<br>= [s<sup>2</sup>]<sub>0</sub><sup>t</sup><br>= <strong>t<sup>2</sup></strong></p>
+          <p>The variable s is just the time variable inside this integral. The endpoint t is the selected elapsed time.</p>
+          <p>At 2.5 s: 2.5<sup>2</sup> = <strong>6.25 m</strong>.</p>
+        </article>
+        <article class="method-card">
+          <p class="eyebrow">03 / SUMMATION</p><h3>Add little pieces of distance.</h3>
+          <p>Split 0 to t into n equal slices, each with width &Delta;t = t/n. In each slice, multiply a sampled velocity by that time width.</p>
+          <p class="math-line">&Delta;x<sub>i</sub> &asymp; v(t<sub>i</sub><sup>*</sup>) &Delta;t<br>x(t) &asymp; &sum;<sub>i=1</sub><sup>n</sup> v(t<sub>i</sub><sup>*</sup>) &Delta;t</p>
+          <p>As the largest slice width approaches zero, the sum approaches the integral.</p>
+          <p class="math-line">x(t) = lim<sub>n&rarr;&infin;</sub> &sum;<sub>i=1</sub><sup>n</sup> v(t<sub>i</sub><sup>*</sup>) &Delta;t<br>= <strong>t<sup>2</sup></strong></p>
+          <p>The star means a chosen sample time within the slice. Try left edges, right edges, or midpoints below.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="sum-lab start-sum" aria-labelledby="sum-title">
+      <div class="section-heading">
+        <div><p class="eyebrow">BUILD THE AREA / ONE RECTANGLE AT A TIME</p><h2 id="sum-title">A sum you can watch.</h2></div>
+        <div class="sum-choices">
+          <label class="slice-control" for="sum-slices">Slices across 2.5 seconds
+            <select id="sum-slices"><option value="5" selected>5 / coarse</option><option value="10">10</option><option value="20">20</option><option value="80">80 / fine</option></select>
+          </label>
+          <label class="slice-control" for="sum-sampling">Sample velocity at
+            <select id="sum-sampling"><option value="left" selected>Left edge</option><option value="right">Right edge</option><option value="midpoint">Midpoint</option></select>
+          </label>
+        </div>
+      </div>
+      <p class="sum-intro">Left-edge rectangles underestimate this increasing line; right-edge rectangles overestimate it.
+        Increase the slice count and watch the estimates approach the exact position. Midpoints are already exact here because the velocity line is straight.</p>
+      <div class="sum-grid">
+        <div>
+          <svg id="sum-chart" class="chart velocity" viewBox="0 0 900 230" role="img" aria-labelledby="sum-chart-title sum-chart-desc"><title id="sum-chart-title">Riemann rectangles under the velocity line</title><desc id="sum-chart-desc">Rectangles accumulate from zero to the selected time. Choose left edges for an underestimate, right edges for an overestimate, or midpoints for the exact area of this straight velocity line.</desc></svg>
+          <div class="sum-transport">
+            <button id="sum-play" type="button" aria-pressed="false">Play accumulation</button>
+            <button id="sum-reset" type="button" class="secondary">Start over</button>
+            <label class="time-control" for="sum-time">Time <output id="sum-time-value" for="sum-time"></output>
+              <input id="sum-time" type="range" min="0" max="2.5" step="0.01" value="1">
+            </label>
+          </div>
+          <p class="sum-caption" id="sum-slice-note"></p>
+        </div>
+        <div class="sum-readings">
+          <p class="sum-formula">Position &asymp; &sum; velocity &times; time width</p>
+          <div class="sum-metrics">
+            <div><span>RECTANGLE SUM</span><strong id="sum-position"></strong></div>
+            <div><span>EXACT POSITION</span><strong id="sum-exact"></strong></div>
+            <div><span>ESTIMATED DISTANCE</span><strong id="sum-distance"></strong></div>
+            <div><span>ESTIMATE MINUS EXACT</span><strong id="sum-error"></strong></div>
+          </div>
+          <p id="sum-parts"></p><p id="sum-last"></p>
+        </div>
+      </div>
+      <div class="sum-worked-example">
+        <h3>Five slices over the full 2.5 seconds</h3>
+        <p>Each slice is 0.5 s wide. Left-edge velocities are 0, 1, 2, 3, and 4 m/s.</p>
+        <p class="math-line">Left sum = (0 + 1 + 2 + 3 + 4) &times; 0.5 = <strong>5 m</strong></p>
+        <p>For n equal slices over the full 2.5 s: left sum = 6.25(1 &minus; 1/n) m; right sum = 6.25(1 + 1/n) m.
+          Both approach <strong>6.25 m</strong>. The midpoint sum is exactly <strong>6.25 m</strong> for every n.</p>
+        <button class="jump secondary" data-time="2.5" type="button">Fill all slices to 2.5 s</button>
+      </div>
+    </section>
+
+    <section class="calculus-walkthrough" aria-labelledby="walkthrough-title">
+      <p class="eyebrow">THE WORKED MATH / NO TRIGONOMETRY</p>
+      <h2 id="walkthrough-title">How do you get from one graph to the next?</h2>
+      <div class="worked-grid">
+        <article class="worked-card derivative-card">
+          <p class="eyebrow">DIFFERENTIATION / FIND THE RATE</p>
+          <h3>Bring down the power. Subtract one.</h3>
+          <p class="rule">d(t<sup>n</sup>)/dt = nt<sup>n&minus;1</sup></p>
+          <div class="worked-step">
+            <span class="step-number">01</span><div><h4>Position &rarr; velocity</h4>
+              <p class="math-line">d(t<sup>2</sup>)/dt<br>= 2t<sup>2&minus;1</sup><br>= <strong>2t = v(t)</strong></p>
+              <p>The slope of the position curve tells you how fast the runner is moving.</p>
+            </div>
+          </div>
+          <div class="worked-step">
+            <span class="step-number">02</span><div><h4>Velocity &rarr; acceleration</h4>
+              <p class="math-line">d(2t)/dt<br>= 2 &times; 1<br>= <strong>2 = a(t)</strong></p>
+              <p>The velocity line has the same slope everywhere: speed increases by 2 m/s each second.</p>
+            </div>
+          </div>
+        </article>
+        <article class="worked-card integral-card">
+          <p class="eyebrow">INTEGRATION / ADD UP THE CHANGE</p>
+          <h3>Add one to the power. Divide by it.</h3>
+          <p class="rule">&int;t<sup>n</sup> dt = t<sup>n+1</sup>/(n + 1) + C &nbsp; (n &ne; &minus;1)</p>
+          <div class="worked-step">
+            <span class="step-number">01</span><div><h4>Acceleration &rarr; velocity</h4>
+              <p class="math-line">&int;2 dt<br>= 2t + C<sub>1</sub><br>= <strong>2t = v(t)</strong></p>
+              <p>Starting at rest means v(0) = 0, so C<sub>1</sub> = 0.</p>
+            </div>
+          </div>
+          <div class="worked-step">
+            <span class="step-number">02</span><div><h4>Velocity &rarr; position</h4>
+              <p class="math-line">&int;2t dt<br>= (2/2)t<sup>2</sup> + C<sub>2</sub><br>= <strong>t<sup>2</sup> = x(t)</strong></p>
+              <p>Starting at position zero means x(0) = 0, so C<sub>2</sub> = 0.</p>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="endpoint-lesson" aria-labelledby="endpoint-title">
+      <div><p class="eyebrow">DIFFERENT QUANTITIES / TWO GEOMETRIC AREAS</p><h2 id="endpoint-title">At 2.5 seconds: 5 m/s and 6.25 m.<br>One area gives velocity. The other gives position.</h2></div>
+      <div class="endpoint-grid">
+        <div><h3>Under acceleration: a rectangle</h3><p class="math-line">&int;<sub>0</sub><sup>2.5</sup> 2 dt = [2t]<sub>0</sub><sup>2.5</sup> = <strong>5 m/s</strong></p><p>2.5 seconds &times; 2 m/s<sup>2</sup> = a velocity increase of 5 m/s.</p></div>
+        <div><h3>Under velocity: a triangle</h3><p class="math-line">&int;<sub>0</sub><sup>2.5</sup> 2t dt = [t<sup>2</sup>]<sub>0</sub><sup>2.5</sup> = <strong>6.25 m</strong></p><p>&frac12; &times; 2.5 seconds &times; 5 m/s = 6.25 meters of position change.</p></div>
+      </div>
+      <div class="checkpoint-buttons" aria-label="Explore time checkpoints">
+        <button class="jump secondary" data-time="0" type="button">At 0 s: v = 0, x = 0</button>
+        <button class="jump secondary" data-time="1" type="button">At 1 s: v = 2, x = 1</button>
+        <button class="jump secondary" data-time="2.5" type="button">At 2.5 s: v = 5, x = 6.25</button>
+      </div>
+    </section>
+    <section class="practice-lab" aria-labelledby="practice-title">
+      <p class="eyebrow">YOUR TURN / 30 QUESTIONS TO EXPLORE</p>
+      <h2 id="practice-title">Think first. Then reveal the answer.</h2>
+      <p class="practice-intro">Unless a question changes the setup, use x(t) = t<sup>2</sup>, v(t) = 2t, and a(t) = 2, starting at rest at position zero.
+        Time is in seconds. Click a question to open its worked answer; click again to hide it. Use the charts above to check your thinking.</p>
+      <div class="practice-groups">
+        <article class="practice-group">
+          <p class="eyebrow">01 / READ THE RUN</p><h3>Where is he? How fast is he going?</h3>
+          <details class="practice-question" id="practice-position-one">
+            <summary>1. What is the position after 1 second?</summary>
+            <div class="practice-answer"><p>x(1) = 1<sup>2</sup> = <strong>1 meter</strong> from the start.</p></div>
+          </details>
+          <details class="practice-question">
+            <summary>2. What is the position after 2 seconds?</summary>
+            <div class="practice-answer"><p>x(2) = 2<sup>2</sup> = <strong>4 meters</strong>. Doubling the time from 1 to 2 seconds quadruples the position, because time is squared.</p></div>
+          </details>
+          <details class="practice-question">
+            <summary>3. What is the velocity after 1 second?</summary>
+            <div class="practice-answer"><p>v(1) = 2 &times; 1 = <strong>2 m/s</strong>. Position and velocity have different units: at this instant he is 1 m from the start and moving at 2 m/s.</p></div>
+          </details>
+          <details class="practice-question">
+            <summary>4. What is the velocity after 2 seconds?</summary>
+            <div class="practice-answer"><p>v(2) = 2 &times; 2 = <strong>4 m/s</strong>. That is about <strong>6:42 per mile</strong>. The position is also numerically 4 here, but 4 m and 4 m/s mean different things.</p></div>
+          </details>
+          <details class="practice-question">
+            <summary>5. What are position and velocity at the 2.5-second finish?</summary>
+            <div class="practice-answer"><p>x(2.5) = 2.5<sup>2</sup> = <strong>6.25 m</strong>; v(2.5) = 2 &times; 2.5 = <strong>5 m/s</strong>, about 5:22 per mile. He is still moving when this example ends.</p></div>
+          </details>
+          <details class="practice-question">
+            <summary>6. How far does he travel between 1 and 2 seconds?</summary>
+            <div class="practice-answer"><p>Subtract positions: x(2) &minus; x(1) = 4 &minus; 1 = <strong>3 meters</strong>. Since he only runs forward, distance and position change are equal.</p></div>
+          </details>
+        </article>
+        <article class="practice-group">
+          <p class="eyebrow">02 / SLOPES AND THE POWER RULE</p><h3>Read the rate of change.</h3>
+          <details class="practice-question">
+            <summary>7. How do you get velocity from x(t) = t&sup2;?</summary>
+            <div class="practice-answer"><p>Differentiate with the power rule: d(t<sup>2</sup>)/dt = 2t<sup>2&minus;1</sup> = <strong>2t = v(t)</strong>. The position curve's tangent slope is velocity.</p></div>
+          </details>
+          <details class="practice-question">
+            <summary>8. How do you get acceleration from v(t) = 2t?</summary>
+            <div class="practice-answer"><p>d(2t)/dt = 2 &times; 1 = <strong>2 m/s<sup>2</sup></strong>. The derivative is constant, so the velocity graph is a straight line.</p></div>
+          </details>
+          <details class="practice-question">
+            <summary>9. What is the position tangent's slope at 1.5 seconds?</summary>
+            <div class="practice-answer"><p>The slope is v(1.5) = 2 &times; 1.5 = <strong>3 m/s</strong>. At this point x(1.5) = 2.25 m; the tangent line is x = 2.25 + 3(t &minus; 1.5), or <strong>x = 3t &minus; 2.25</strong>.</p></div>
+          </details>
+          <details class="practice-question">
+            <summary>10. What is the slope of the velocity line?</summary>
+            <div class="practice-answer"><p>Use any two points, such as (0, 0) and (2.5, 5): slope = (5 &minus; 0)/(2.5 &minus; 0) = <strong>2 m/s<sup>2</sup></strong>. This is acceleration, not position.</p></div>
+          </details>
+          <details class="practice-question">
+            <summary>11. Is average velocity over 0&ndash;2 seconds the same as velocity at 2 seconds?</summary>
+            <div class="practice-answer"><p>No. Average velocity = (x(2) &minus; x(0))/(2 &minus; 0) = 4/2 = <strong>2 m/s</strong>, the position graph's secant slope. Instantaneous velocity at 2 s is <strong>4 m/s</strong>, the tangent slope there.</p></div>
+          </details>
+          <details class="practice-question">
+            <summary>12. At the start, velocity is zero. Must acceleration also be zero?</summary>
+            <div class="practice-answer"><p><strong>No.</strong> Here v(0) = 0 but a(0) = 2 m/s<sup>2</sup>. Being at rest describes velocity at that instant; acceleration describes how velocity is changing as he starts.</p></div>
+          </details>
+        </article>
+        <article class="practice-group">
+          <p class="eyebrow">03 / AREAS AND INTEGRATION</p><h3>Build the accumulated change.</h3>
+          <details class="practice-question">
+            <summary>13. Integrate a(t) = 2 to find velocity. What happens to C?</summary>
+            <div class="practice-answer"><p>&int;2 dt = 2t + C. Starting at rest gives 0 = 2 &times; 0 + C, so C = 0 and <strong>v(t) = 2t</strong>. Starting velocity determines the integration constant.</p></div>
+          </details>
+          <details class="practice-question">
+            <summary>14. Integrate v(t) = 2t to find position.</summary>
+            <div class="practice-answer"><p>&int;2t dt = (2/2)t<sup>2</sup> + C = t<sup>2</sup> + C. Since x(0) = 0, C = 0 and <strong>x(t) = t<sup>2</sup></strong>.</p></div>
+          </details>
+          <details class="practice-question">
+            <summary>15. What is the area under velocity from 0 to 2 seconds?</summary>
+            <div class="practice-answer"><p>It is a triangle: &frac12; &times; 2 s &times; 4 m/s = <strong>4 m</strong>. Integration agrees: &int;<sub>0</sub><sup>2</sup> 2t dt = [t<sup>2</sup>]<sub>0</sub><sup>2</sup> = 4. This area gives position change.</p></div>
+          </details>
+          <details class="practice-question">
+            <summary>16. What is the area under acceleration from 0 to 2 seconds?</summary>
+            <div class="practice-answer"><p>It is a rectangle: 2 s &times; 2 m/s<sup>2</sup> = <strong>4 m/s</strong>. It gives velocity change, not distance. Add the starting velocity, zero, to get v(2) = 4 m/s.</p></div>
+          </details>
+          <details class="practice-question">
+            <summary>17. Find the distance from 1 to 2 seconds using the velocity line, without integrating.</summary>
+            <div class="practice-answer"><p>The area is a trapezoid. Average velocity = (v(1) + v(2))/2 = (2 + 4)/2 = 3 m/s. Multiply by 1 second: <strong>3 meters</strong>. Endpoint averaging is exact because velocity is linear.</p></div>
+          </details>
+          <details class="practice-question">
+            <summary>18. Why can't you just multiply the final 4 m/s by 2 seconds?</summary>
+            <div class="practice-answer"><p>That gives 8 m and incorrectly assumes he ran at 4 m/s for the entire interval. He started at zero and sped up. Use the average, (0 + 4)/2 = 2 m/s: 2 &times; 2 = <strong>4 m</strong>.</p></div>
+          </details>
+        </article>
+        <article class="practice-group">
+          <p class="eyebrow">04 / BUILD A SUM</p><h3>Turn rectangles into an integral.</h3>
+          <details class="practice-question">
+            <summary>19. Use four left-edge rectangles over 0&ndash;2 seconds. What is the sum?</summary>
+            <div class="practice-answer"><p>&Delta;t = 2/4 = 0.5 s. Sample at 0, 0.5, 1, and 1.5 s; velocities are 0, 1, 2, and 3 m/s.</p><p>(0 + 1 + 2 + 3) &times; 0.5 = <strong>3 m</strong>, an underestimate of the exact 4 m.</p></div>
+          </details>
+          <details class="practice-question">
+            <summary>20. Now use four right-edge rectangles. What changes?</summary>
+            <div class="practice-answer"><p>Sample at 0.5, 1, 1.5, and 2 s; velocities are 1, 2, 3, and 4 m/s.</p><p>(1 + 2 + 3 + 4) &times; 0.5 = <strong>5 m</strong>, an overestimate because velocity is increasing.</p></div>
+          </details>
+          <details class="practice-question">
+            <summary>21. What do four midpoint rectangles give?</summary>
+            <div class="practice-answer"><p>Sample at 0.25, 0.75, 1.25, and 1.75 s; velocities are 0.5, 1.5, 2.5, and 3.5 m/s.</p><p>(0.5 + 1.5 + 2.5 + 3.5) &times; 0.5 = <strong>4 m</strong>, exactly. Midpoints are exact for this straight velocity line, but not generally for curved graphs.</p></div>
+          </details>
+          <details class="practice-question">
+            <summary>22. What if you double to eight left- or right-edge rectangles over 0&ndash;2 seconds?</summary>
+            <div class="practice-answer"><p>Each width is 0.25 s. Left-edge velocities are 0, 0.5, 1, 1.5, 2, 2.5, 3, and 3.5; their sum times 0.25 is <strong>3.5 m</strong>. Right-edge velocities are 0.5 through 4 in steps of 0.5; the result is <strong>4.5 m</strong>. Both are closer to the exact 4 m.</p></div>
+          </details>
+          <details class="practice-question">
+            <summary>23. Can you write the right-edge sum and take its limit?</summary>
+            <div class="practice-answer"><p>For 0&ndash;2 s, &Delta;t = 2/n and t<sub>i</sub> = i&Delta;t. Since v(t<sub>i</sub>) = 2i&Delta;t:</p><p class="math-line">S<sub>n</sub> = &sum;<sub>i=1</sub><sup>n</sup> 2i(&Delta;t)<sup>2</sup><br>= (8/n<sup>2</sup>) &sum;<sub>i=1</sub><sup>n</sup> i<br>= (8/n<sup>2</sup>) &times; n(n + 1)/2<br>= 4(1 + 1/n) meters</p><p>Using &sum;<sub>i=1</sub><sup>n</sup> i = n(n + 1)/2, the limit as n grows without bound is <strong>4 m</strong>, equal to &int;<sub>0</sub><sup>2</sup> 2t dt.</p></div>
+          </details>
+          <details class="practice-question">
+            <summary>24. Why does velocity &times; slice width give meters, not meters per second?</summary>
+            <div class="practice-answer"><p>The time units cancel: (m/s) &times; s = <strong>m</strong>. Adding these pieces accumulates position change. Acceleration &times; time instead gives (m/s<sup>2</sup>) &times; s = <strong>m/s</strong>, a velocity change.</p></div>
+          </details>
+        </article>
+        <article class="practice-group">
+          <p class="eyebrow">05 / WHAT IF?</p><h3>Change the setup. Rebuild the equations.</h3>
+          <details class="practice-question" id="practice-acceleration-three">
+            <summary>25. What if acceleration were 3 m/s&sup2; instead of 2?</summary>
+            <div class="practice-answer"><p>Still starting at rest at position zero: <strong>a(t) = 3</strong>. Integrate once: <strong>v(t) = 3t</strong>. Integrate again: <strong>x(t) = 1.5t<sup>2</sup></strong>. The position coefficient is half the acceleration.</p><p>This is a hypothetical variation; the charts above still use acceleration 2 m/s<sup>2</sup>.</p></div>
+          </details>
+          <details class="practice-question">
+            <summary>26. With acceleration 3, what are position and velocity after 1 and 2 seconds?</summary>
+            <div class="practice-answer"><p>At 1 s: x(1) = 1.5 &times; 1<sup>2</sup> = <strong>1.5 m</strong>, and v(1) = <strong>3 m/s</strong>.</p><p>At 2 s: x(2) = 1.5 &times; 2<sup>2</sup> = <strong>6 m</strong>, and v(2) = <strong>6 m/s</strong>. That second speed exceeds the lesson's 5:00-mile pace limit, so this variation would need to end sooner.</p></div>
+          </details>
+          <details class="practice-question">
+            <summary>27. With acceleration 3, when would he reach the same 5 m/s target, and how far would he go?</summary>
+            <div class="practice-answer"><p>Solve 3t = 5: <strong>t = 5/3 s &asymp; 1.67 s</strong>. Then x = 1.5(5/3)<sup>2</sup> = <strong>25/6 m &asymp; 4.17 m</strong>. Higher acceleration reaches the same speed sooner, over less distance. The final pace is still about 5:22 per mile.</p></div>
+          </details>
+          <details class="practice-question">
+            <summary>28. Could acceleration 3 run for the same 2.5 seconds and still respect the pace limit?</summary>
+            <div class="practice-answer"><p><strong>No.</strong> v(2.5) = 3 &times; 2.5 = 7.5 m/s, about <strong>3:35 per mile</strong>, faster than 5:00. An acceleration equation does not automatically cap speed. End the acceleration earlier; reaching the teaching target of 5 m/s takes 5/3 seconds.</p></div>
+          </details>
+          <details class="practice-question">
+            <summary>29. Back to acceleration 2: what if he started already moving at 1 m/s?</summary>
+            <div class="practice-answer"><p>Starting at position zero, integration gives <strong>v(t) = 1 + 2t</strong> and <strong>x(t) = t + t<sup>2</sup></strong>. The initial velocity adds a constant to velocity and a linear term to position. These changed equations would also need a shorter interval to preserve the pace limit.</p></div>
+          </details>
+          <details class="practice-question">
+            <summary>30. What if he started at position 10 m, still at rest with acceleration 2?</summary>
+            <div class="practice-answer"><p><strong>x(t) = 10 + t<sup>2</sup></strong>; <strong>v(t) = 2t</strong> and <strong>a(t) = 2</strong> are unchanged. At 2 s his position is 14 m, but he has traveled only 14 &minus; 10 = <strong>4 m</strong>. A different starting position shifts the position graph without changing its slopes.</p></div>
+          </details>
+        </article>
+      </div>
+    </section>
+    <footer>t is in seconds; x in meters; v in m/s; a in m/s<sup>2</sup>. This example ends after 2.5 seconds, with the runner still moving.<br><a class="example-link" href="workout.html">Back to the 10-mile workout</a></footer>
+  </main>
+</body>
+</html>
